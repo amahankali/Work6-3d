@@ -45,6 +45,9 @@ void add_box( struct matrix * edges,
 void add_sphere( struct matrix * edges, 
 		 double cx, double cy, double cz,
 		 double r, double step ) {
+
+  struct matrix* pointSet = generate_sphere(cx, cy, cz, r, step);
+
   return;
 }
 
@@ -62,7 +65,27 @@ void add_sphere( struct matrix * edges,
   ====================*/
 struct matrix * generate_sphere(double cx, double cy, double cz,
 				double r, double step ) {
-  return NULL;
+
+  struct matrix* pointSet = new_matrix(4, 1); //at first 1 point
+
+  double theta = 0;
+  double phi = 0;
+
+  //theta is from 0 to 2PI, it belongs to the circle
+  //phi is from 0 to PI, it belongs to the rotation
+  for(; phi < 1 + step; phi += step)
+  {
+    theta = 0;
+    for(; theta < 1 + step; theta += step)
+    {
+      double xI = r * cos(theta * 2 * M_PI);
+      double yI = r * sin(theta * 2 * M_PI) * cos(phi * M_PI);
+      double zI = r * sin(theta * 2 * M_PI) * sin(phi * M_PI);
+      add_point(pointSet, xI, yI, zI);
+    }
+  }
+
+  return pointSet;
 }
 
 /*======== void add_torus() ==========
