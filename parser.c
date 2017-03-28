@@ -233,6 +233,15 @@ void parse_file ( char * filename,
       add_sphere(edges, x, y, z, radius, step);
     }
 
+    else if( strncmp(line, "torus", strlen(line)) == 0) {
+      fgets(line, sizeof(line), f);
+      double x, y, z, r1, r2;
+      x = y = z = r1 = r2 = 0;
+
+      sscanf(line, "%lf %lf %lf %lf %lf", x, y, z, r1, r2);
+      add_torus(edges, x, y, z, r1, r2, step);
+    }
+
   }
 }
   
