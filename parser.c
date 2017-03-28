@@ -215,6 +215,15 @@ void parse_file ( char * filename,
       edges->lastcol = 0;
     }
 
+    else if( strncmp(line, "box", strlen(line)) == 0) {
+      fgets(line, sizeof(line), f);
+      double x, y, z, width, height, depth;
+      x = y = z = width = height = depth = 0;
+
+      sscanf(line, "%lf %lf %lf %lf %lf %lf", x, y, z, width, height, depth);
+      add_box(edges, x, y, z, width, height, depth);
+    }
+
   }
 }
   
