@@ -210,6 +210,22 @@ void parse_file ( char * filename,
       save_extension(s, line);
     }//end save
     
+    else if( strncmp(line, "clear", strlen(line)) == 0) {
+      scalar_mult(0, edges);
+      edges->lastcol = 0;
+    }
+
   }
 }
   
+
+
+
+
+
+
+
+
+
+
+
