@@ -25,6 +25,32 @@
 void add_box( struct matrix * edges,
 	      double x, double y, double z,
 	      double width, double height, double depth ) {
+
+  double x1 = x; double x2 = x + width;
+  double y1 = y; double y2 = y - height;
+  double z1 = z; double z2 = z - depth;
+
+  int i = 0;
+  for(; i < 8; i++)
+  {
+    int i0 = i;
+
+    double xI;
+    if(i % 2 == 0) xI = x1; else xI = x2;
+    i /= 2;
+
+    double yI;
+    if(i % 2 == 0) yI = y1; else yI = y2;
+    i /= 2;
+
+    double zI;
+    if(i % 2 == 0) zI = z1; else zI = z2;
+
+    add_edge(edges, xI, yI, zI, xI + 1, yI + 1, zI + 1);
+    i = i0;
+  }
+
+  return;
 }
 
 /*======== void add_sphere() ==========
@@ -47,6 +73,17 @@ void add_sphere( struct matrix * edges,
 		 double r, double step ) {
 
   struct matrix* pointSet = generate_sphere(cx, cy, cz, r, step);
+
+  int pNum = 0;
+  for(; pNum < pointSet->lastcol; pNum++)
+  {
+    double xI = pointSet->m[0][pNum];
+    double yI = pointSet->m[1][pNum];
+    double zI = pointSet->m[2][pNum];
+    add_edge(edges, xI, yI, zI, xI + 1, yI + 1, zI + 1);
+  }
+
+  free_matrix(pointSet);
 
   return;
 }
@@ -107,6 +144,19 @@ struct matrix * generate_sphere(double cx, double cy, double cz,
 void add_torus( struct matrix * edges, 
 		double cx, double cy, double cz,
 		double r1, double r2, double step ) {
+
+  struct matrix* pointSet = generate_torus(cx, cy, cz, r1, r2, step);
+  int pNum = 0;
+  for(; pNum < pointSet->lastcol; pNum++)
+  {
+    double xI = pointSet->m[0][pNum];
+    double yI = pointSet->m[1][pNum];
+    double zI = pointSet->m[2][pNum];
+    add_edge(edges, xI, yI, zI, xI + 1, yI + 1, zI + 1);
+  }
+
+  free_matrix(pointSet);
+
   return;
 }
 
@@ -124,7 +174,26 @@ void add_torus( struct matrix * edges,
   ====================*/
 struct matrix * generate_torus( double cx, double cy, double cz,
 				double r1, double r2, double step ) {
-  return NULL;
+
+  struct matrix* pointSet = new_matrix(4, 1);
+
+  double theta = 0;
+  double phi = 0;
+
+  for(; phi < 1 + step; phi++)
+  {
+    theta = 0;
+    for(; theta < 1 + step; theta++)
+    {
+      double xI = cos(phi * 2 * M_PI) * (r1 * cos(theta * 2 * M_PI) + r2);
+      double yI = r1 * sin(theta * 2 * M_PI);
+      double zI = -1 * sin(phi * 2 * M_PI) * (r1 * cos(theta * 2 * M_PI) + r2);
+
+      add_point(pointSet, xI, yI, zI);
+    }
+  }
+
+  return pointSet;
 }
 
 /*======== void add_circle() ==========
