@@ -224,6 +224,15 @@ void parse_file ( char * filename,
       add_box(edges, x, y, z, width, height, depth);
     }
 
+    else if( strncmp(line, "sphere", strlen(line)) == 0) {
+      fgets(line, sizeof(line), f);
+      double x, y, z, radius;
+      x = y = z = radius = 0;
+
+      sscanf(line, "%lf %lf %lf %lf", x, y, z, radius);
+      add_sphere(edges, x, y, z, radius, step);
+    }
+
   }
 }
   
