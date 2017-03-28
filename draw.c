@@ -180,10 +180,10 @@ struct matrix * generate_torus( double cx, double cy, double cz,
   double theta = 0;
   double phi = 0;
 
-  for(; phi < 1 + step; phi++)
+  for(; phi < 1 + step; phi += step)
   {
     theta = 0;
-    for(; theta < 1 + step; theta++)
+    for(; theta < 1 + step; theta += step)
     {
       double xI = cos(phi * 2 * M_PI) * (r1 * cos(theta * 2 * M_PI) + r2);
       double yI = r1 * sin(theta * 2 * M_PI);

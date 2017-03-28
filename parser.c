@@ -220,7 +220,7 @@ void parse_file ( char * filename,
       double x, y, z, width, height, depth;
       x = y = z = width = height = depth = 0;
 
-      sscanf(line, "%lf %lf %lf %lf %lf %lf", x, y, z, width, height, depth);
+      sscanf(line, "%lf %lf %lf %lf %lf %lf", &x, &y, &z, &width, &height, &depth);
       add_box(edges, x, y, z, width, height, depth);
     }
 
@@ -229,7 +229,7 @@ void parse_file ( char * filename,
       double x, y, z, radius;
       x = y = z = radius = 0;
 
-      sscanf(line, "%lf %lf %lf %lf", x, y, z, radius);
+      sscanf(line, "%lf %lf %lf %lf", &x, &y, &z, &radius);
       add_sphere(edges, x, y, z, radius, step);
     }
 
@@ -238,7 +238,7 @@ void parse_file ( char * filename,
       double x, y, z, r1, r2;
       x = y = z = r1 = r2 = 0;
 
-      sscanf(line, "%lf %lf %lf %lf %lf", x, y, z, r1, r2);
+      sscanf(line, "%lf %lf %lf %lf %lf", &x, &y, &z, &r1, &r2);
       add_torus(edges, x, y, z, r1, r2, step);
     }
 
