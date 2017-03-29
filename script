@@ -17,5 +17,7 @@ move
 250 250 250
 apply
 ident
+box
+50 50 50 25 25 25
 display
 quit
