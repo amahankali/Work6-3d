@@ -19,5 +19,7 @@ apply
 ident
 box
 50 50 50 25 25 25
+#save
+#planet.png
 display
 quit
